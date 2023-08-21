@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "0Qf8iyerO18lkU7NYHMY2XtjyLMyjRk78NYZpS8biIQ=",
+  "Source": "DavChatBot.WebApi",
+  "BasePath": "_content/DavChatBot.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

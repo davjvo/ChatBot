@@ -1,0 +1,12 @@
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/bin/Debug/net7.0/DatChatBot.DataLayer.deps.json
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/bin/Debug/net7.0/DatChatBot.DataLayer.dll
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/bin/Debug/net7.0/DatChatBot.DataLayer.pdb
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.csproj.AssemblyReference.cache
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.AssemblyInfoInputs.cache
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.AssemblyInfo.cs
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.csproj.CoreCompileInputs.cache
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.dll
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/refint/DatChatBot.DataLayer.dll
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/DatChatBot.DataLayer.pdb
+/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/Debug/net7.0/ref/DatChatBot.DataLayer.dll
