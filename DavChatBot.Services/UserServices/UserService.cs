@@ -2,28 +2,42 @@
 using DatChatBot.Services.DTOs;
 using DatChatBot.DataLayer.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DavChatBot.Services.UserServices
 {
     public class UserService : BaseDbServices<User>, IUserService
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User>? _signInManager;
+        private readonly UserManager<User>? _userManager;
 
-        public UserService(DavChatBotDbContext dbContext, SignInManager<User> signInManager, UserManager<User> userManager) : base(dbContext)
+        public UserService(IDbContextFactory<DavChatBotDbContext> dbContextFactory, SignInManager<User>? signInManager = null, UserManager<User>? userManager = null) : base(dbContextFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
         }
-
-        public async Task<bool> SignIn(SignInDTO user)
+        public async Task<SignInDTOResponse> SignIn(SignInDTO user)
         {
+            if (_signInManager == null)
+                throw new ArgumentException("Identity not configured");
+
+            var response = new SignInDTOResponse();
             var signInResult = await _signInManager.PasswordSignInAsync(user.DisplayName, user.Password, false, false);
-            return signInResult.Succeeded;
+
+            if (!signInResult.Succeeded)
+                return response;
+
+            var dbUser = await GetUserAsync(user.DisplayName);
+            response.UserId = dbUser!.Id;
+            response.Success = true;
+            return response;
         }
 
         public async Task<SignUpDTOResponse> SignUp(SignUpDTO user)
         {
+            if (_userManager == null)
+                throw new ArgumentException("Identity not configured");
+
             var response = new SignUpDTOResponse();
 
             if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.DisplayName))
@@ -57,6 +71,16 @@ namespace DavChatBot.Services.UserServices
             }
 
             return response;
+        }
+
+        public async Task<User?> GetUserAsync(int id)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task<User?> GetUserAsync(string userName)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(m => userName.Equals(m.UserName));
         }
     }
 }

@@ -1,15 +1,18 @@
-﻿using DatChatBot.DataLayer.Records;
+﻿using DatChatBot.DataLayer.Constants;
+using DatChatBot.DataLayer.Records;
 
 namespace DavChatBot.Services.ChatServices
 {
     public class BotCommandService : IBotCommandService
     {
-        public readonly IReadOnlyList<string> _availableCommands =
-            new List<string> {
-            "/stock"
-        };
+        public readonly IReadOnlyList<string> _availableCommands;
 
-        private const string DefaultErrorMessage = "Error found in command execution";
+        public BotCommandService()
+        {
+            _availableCommands = new List<string> {
+                BotCommands.StockCommand
+            };
+        }
 
         public CommandInformation GetCommandInformation(string text)
         {
@@ -24,7 +27,7 @@ namespace DavChatBot.Services.ChatServices
 
             var commandInfo = ConvertToCommandInformation(text);
 
-            commandInfo ??= new CommandInformation(string.Empty, string.Empty, DefaultErrorMessage);
+            commandInfo ??= new CommandInformation(string.Empty, string.Empty, BotConstants.Errors.Defaul);
 
             return commandInfo;
         }
@@ -36,20 +39,20 @@ namespace DavChatBot.Services.ChatServices
             if (commandInfo == null)
             {
                 if (!text.StartsWith("/"))
-                    return "Invalid command format, please use '/' to use this command.";
+                    return BotConstants.Errors.InvalidCommandFormat;
 
 
                 if (!text.Contains('='))
-                    return "Invalid parameter provided, please add '=' to specify the command";
+                    return BotConstants.Errors.InvalidParameter;
 
-                return DefaultErrorMessage;
+                return BotConstants.Errors.Defaul;
             }
 
             if (!_availableCommands.Contains(commandInfo.Command))
                 return $"'{commandInfo.Command}' Command not found.";
 
             return string.IsNullOrWhiteSpace(commandInfo.Parameter)
-                ? "Paramater can not be null"
+                ? BotConstants.Errors.NullParameter
                 : null;
         }
 

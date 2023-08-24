@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj": {}
+    "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj": {}
   },
   "projects": {
-    "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
+    "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj",
+        "projectUniqueName": "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj",
         "projectName": "DatChatBot.DataLayer",
-        "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj",
+        "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj",
         "packagesPath": "/Users/davmivaldezogando/.nuget/packages/",
-        "outputPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/obj/",
+        "outputPath": "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/davmivaldezogando/.nuget/NuGet/NuGet.Config"
@@ -72,14 +72,14 @@
         }
       }
     },
-    "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/DavChatBot.Services.csproj": {
+    "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/DavChatBot.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/DavChatBot.Services.csproj",
+        "projectUniqueName": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/DavChatBot.Services.csproj",
         "projectName": "DavChatBot.Services",
-        "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/DavChatBot.Services.csproj",
+        "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/DavChatBot.Services.csproj",
         "packagesPath": "/Users/davmivaldezogando/.nuget/packages/",
-        "outputPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/obj/",
+        "outputPath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/davmivaldezogando/.nuget/NuGet/NuGet.Config"
@@ -95,8 +95,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
-                "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj"
+              "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
+                "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj"
               }
             }
           }
@@ -148,14 +148,14 @@
         }
       }
     },
-    "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj": {
+    "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj",
+        "projectUniqueName": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj",
         "projectName": "DavChatBot.Worker",
-        "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj",
+        "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Worker/DavChatBot.Worker.csproj",
         "packagesPath": "/Users/davmivaldezogando/.nuget/packages/",
-        "outputPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Worker/obj/",
+        "outputPath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Worker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/davmivaldezogando/.nuget/NuGet/NuGet.Config"
@@ -171,11 +171,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
-                "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj"
+              "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj": {
+                "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DatChatBot.DataLayer/DatChatBot.DataLayer.csproj"
               },
-              "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/DavChatBot.Services.csproj": {
-                "projectPath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.Services/DavChatBot.Services.csproj"
+              "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/DavChatBot.Services.csproj": {
+                "projectPath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.Services/DavChatBot.Services.csproj"
               }
             }
           }
@@ -193,6 +193,10 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[30.0.1, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",

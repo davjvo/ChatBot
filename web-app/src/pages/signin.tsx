@@ -12,8 +12,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SignInDto } from '../DTOs/SignInDTO';
 import helpers from '../utils/helpers';
 import { UserService } from '../services/userServices';
+import { Alert, CircularProgress, IconButton, Snackbar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const SignIn: React.FC = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -23,20 +28,58 @@ export const SignIn: React.FC = () => {
     signInDto.DisplayName = helpers.getValueOrDefault(data, 'username');
     signInDto.Password = helpers.getValueOrDefault(data, 'password');
 
-    var singInResult = await UserService.signIn(signInDto);
+    try {
+      setIsLoading(true);
+      var singInResult = await UserService.signIn(signInDto);
+      if (singInResult && singInResult.success) {
+        navigate('./chat', {
+          state: {
+            user: signInDto.DisplayName,
+            userId: singInResult.userId
+          }
+        });
+      }
+    }
+    catch (exception) {
+      let message = '';
 
-    if (singInResult) {
-      navigate('./chat', {
-        state: {
-          user: signInDto.DisplayName
-        }
-      });
+      if (exception instanceof Error)
+        message = exception?.message;
+      else if (typeof exception === "string")
+        message = exception;
+
+      setError(`${message} Check that you've correctly set the constants under the utils folder.`);
+      setIsOpen(true);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
+
+  const handleToastClose = () => {
+    setIsOpen(false);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Snackbar open={isOpen} autoHideDuration={1500}
+        onClose={handleToastClose} anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'top'
+        }} action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleToastClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           marginTop: 8,
@@ -69,13 +112,22 @@ export const SignIn: React.FC = () => {
             type="password"
             id="password"
             autoComplete="current-password" />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }} >
-            Sign In
-          </Button>
+          {
+            !isLoading ?
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }} >
+                Sign In
+              </Button> :
+              <Grid sx={{
+                display: 'flex',
+                width: '100%'
+              }} justifyContent='center' alignItems='center'>
+                <CircularProgress />
+              </Grid>
+          }
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to="/signup">

@@ -1,4 +1,4 @@
 export const Constants = {
-  API_BASE_URL: "",
-  BASE_URL: ""
+  BASE_URL: "BASE_URL",
+  API_BASE_URL: "BASE_URL/api/",
 }

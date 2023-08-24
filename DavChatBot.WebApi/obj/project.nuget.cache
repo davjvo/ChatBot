@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4yG/c9mbk7KamiQAQxATA8V4bnaXpHHSFbR9/BENvbLV+IhqHY1Cw3PLA5nKEfk0YMSFOwAap8/trkMB2pf3UQ==",
+  "dgSpecHash": "dYqdjniljbkeRC1MOoI9zoTXAWTrvaAd2jTJD3hNcq6SaL6n91YASg38U0Y4xWA+B0K9qNWGzwNmrOS37TQSqw==",
   "success": true,
-  "projectFilePath": "/Users/davmivaldezogando/Desktop/DavChatBot/DavChatBot.WebApi/DavChatBot.WebApi.csproj",
+  "projectFilePath": "/Users/davmivaldezogando/Desktop/ChatBot/DavChatBot.WebApi/DavChatBot.WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/davmivaldezogando/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/davmivaldezogando/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",

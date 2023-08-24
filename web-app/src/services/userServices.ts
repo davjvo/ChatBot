@@ -4,7 +4,7 @@ import { SignUpDtoResponse } from "../DTOs/SignUpDtoResponse";
 import { Constants } from "../utils/constants";
 
 export const UserService = {
-  signIn: async (signInDto: SignInDto) => {
+  signIn: async (signInDto: SignInDto): Promise<SignUpDtoResponse> => {
     const response = await fetch(`${Constants.API_BASE_URL}User/SignIn`, {
       method: 'POST',
       headers: {

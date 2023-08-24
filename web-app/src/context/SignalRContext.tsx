@@ -1,54 +1,46 @@
-// SignalRContext.tsx
-import React, { createContext, useState, useEffect } from 'react';
-import * as signalR from '@microsoft/signalr';
-import { Constants } from '../utils/constants';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import * as signalR from "@microsoft/signalr";
+import { Constants } from "../utils/constants";
 
-export interface SignalRContextType {
-  connection: signalR.HubConnection | null;
-  isConnected: boolean;
-}
-
+const SignalRContext = createContext<signalR.HubConnection | null>(null);
 
 type SignalRProviderProps = {
-  children?: React.ReactNode
+  children: React.ReactNode;
 };
 
-const SignalRContext = createContext<SignalRContextType | undefined>(undefined);
-
-const SignalRProvider: React.FC<SignalRProviderProps> = ({ children }) => {
-  const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+export const SignalRProvider: React.FC<SignalRProviderProps> = ({ children }) => {
+  const [hubConnection, setHubConnection] = useState<signalR.HubConnection | null>(null);
 
   useEffect(() => {
-    const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${Constants.BASE_URL}chathub`)
-      .build();
+    const createHubConnection = async () => {
+      const hubConnect = new signalR.HubConnectionBuilder()
+        .withUrl(`${Constants.BASE_URL}chatHub`)
+        .withAutomaticReconnect()
+        .build();
 
-    newConnection
-      .start()
-      .then(() => {
-        setIsConnected(true);
-      })
-      .catch((error) => {
-        console.error('SignalR connection failed:', error);
-      });
+      try {
+        await hubConnect.start();
+        console.log("Connection successful!");
+        setHubConnection(hubConnect);
+      } catch (err) {
+        console.error("There was an error establishing the connection", err);
+      }
+    };
 
-    setConnection(newConnection);
+    createHubConnection();
 
     return () => {
-      if (connection) {
-        connection.stop();
-      }
+      hubConnection?.stop();
     };
   }, []);
 
-  const contextValue: SignalRContextType = { connection, isConnected };
+  return <SignalRContext.Provider value={hubConnection}>{children}</SignalRContext.Provider>;
+};
 
-  return (
-    <SignalRContext.Provider value={contextValue}>
-      {children}
-    </SignalRContext.Provider>
-  );
-}
-
-export { SignalRContext, SignalRProvider };
+export const useSignalR = () => {
+  const context = useContext(SignalRContext);
+  if (context === undefined) {
+    throw new Error("useSignalR must be used within a SignalRProvider");
+  }
+  return context;
+};

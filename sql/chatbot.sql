@@ -62,9 +62,9 @@ CREATE TABLE AspNetUserTokens (
     PRIMARY KEY (UserId, LoginProvider, Name)
 )
 
-CREATE TABLE ChatBotMessage (
+CREATE TABLE ChatMessages (
     Id INT PRIMARY KEY IDENTITY(1,1),
     [Message] VARCHAR(MAX),
     CreatedAt DATETIMEOFFSET,
-    UserId INT FOREIGN KEY REFERENCES AspNetUsers(Id)
+    UserId INT
 )

@@ -1,4 +1,5 @@
 ﻿using DatChatBot.DataLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace DavChatBot.Services
 {
@@ -6,9 +7,9 @@ namespace DavChatBot.Services
     {
         protected readonly DavChatBotDbContext _dbContext;
 
-        public BaseDbServices(DavChatBotDbContext dbContext)
+        public BaseDbServices(IDbContextFactory<DavChatBotDbContext> dbContextFactory)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContextFactory.CreateDbContext();
         }
     }
 }

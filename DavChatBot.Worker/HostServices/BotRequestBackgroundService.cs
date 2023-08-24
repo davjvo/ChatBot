@@ -1,62 +1,60 @@
 ﻿using DatChatBot.DataLayer.Records;
 using DavChatBot.Services.RabbitMqServices;
-using Microsoft.Extensions.Options;
 using DatChatBot.DataLayer;
 using DatChatBot.DataLayer.Constants;
-using DatChatBot.DataLayer.Entities;
 using DavChatBot.Services.ChatServices;
 using Microsoft.EntityFrameworkCore;
+using DavChatBot.Services.UserServices;
+using Microsoft.Extensions.Options;
 
 namespace DavChatBot.Worker.HostServices
 {
 
     public class BotRequestBackgroundService : IHostedService
     {
-        private readonly StockOptions _stockOptions;
         private readonly IRabbitMqService _rabbitMqService;
         private readonly IStockService _stockService;
-        private readonly DavChatBotDbContext _dbContextFactory;
+        private readonly IUserService _userService;
+        private readonly DavChatBotDbContext _dbContext;
+        private readonly StockOptions _stockOptions;
 
         public BotRequestBackgroundService(
-            IOptions<StockOptions> stockApiOptions,
             IRabbitMqService rabbitMqService,
             IDbContextFactory<DavChatBotDbContext> dbContext,
-            IStockService stockService)
+            IStockService stockService,
+            IUserService userService,
+            IOptions<StockOptions> stockOptions)
         {
-            _stockOptions = stockApiOptions.Value;
             _rabbitMqService = rabbitMqService;
-            _dbContextFactory = dbContext.CreateDbContext();
-
-            if (string.IsNullOrWhiteSpace(_stockOptions.Url))
-                throw new ArgumentNullException(nameof(_stockOptions.Url));
-
             _stockService = stockService;
+            _userService = userService;
+            _dbContext = dbContext.CreateDbContext();
+            _stockOptions = stockOptions.Value;
+
+            if (string.IsNullOrWhiteSpace(_stockOptions?.Url))
+                throw new ArgumentNullException(nameof(_stockOptions.Url));
         }
 
         private async Task ResolveStockCode(CommandInformation command, CancellationToken ct = default)
         {
             var message = command.Command switch
             {
-                "/stock" => await _stockService.GetStockMessage(_stockOptions.Url, command.Parameter, ct),
+                BotCommands.StockCommand => await _stockService.GetStockMessage(_stockOptions.Url, command.Parameter, ct),
                 _ => $"CommandInfo {command} is not a Stock Command"
             };
 
-            await ProduceBotMessage(message, ct);
-        }
-
-        public async Task ProduceBotMessage(string message, CancellationToken ct = default)
-        {
-            var chatMessage = new ChatBotMessage
+            var entry = _dbContext.ChatMessages.Add(new DatChatBot.DataLayer.Entities.ChatMessage
             {
-                CreatedAt = DateTimeOffset.Now,
                 Message = message,
                 UserId = BotConstants.Id,
-            };
+                CreatedAt = DateTime.Now
+            });
 
-            await _rabbitMqService.Produce("chat-queue", chatMessage, ct);
+            await _dbContext.SaveChangesAsync(ct);
+            await _rabbitMqService.Produce(QueueNames.Chat, entry.Entity, ct);
         }
 
-        public async Task StartAsync(CancellationToken ct) => await _rabbitMqService.Consume<CommandInformation>("", ResolveStockCode, ct);
+        public async Task StartAsync(CancellationToken ct) => await _rabbitMqService.Consume<CommandInformation>(QueueNames.Bot, ResolveStockCode, ct);
 
         public Task StopAsync(CancellationToken ct)
         {

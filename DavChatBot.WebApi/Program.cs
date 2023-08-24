@@ -1,6 +1,9 @@
 ﻿using DatChatBot.DataLayer;
 using DatChatBot.DataLayer.Entities;
+using DavChatBot.Services.ChatServices;
+using DavChatBot.Services.RabbitMqServices;
 using DavChatBot.Services.UserServices;
+using DavChatBot.WebApi.HostServices;
 using DavChatBot.WebApi.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,12 +39,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<DavChatBotDbContext>(options =>
-{
-    options.EnableDetailedErrors();
-    var connectionString = builder.Configuration.GetConnectionString("Default");
-    options.UseSqlServer(connectionString);
-});
+var connectionString = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContextFactory<DavChatBotDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services
     .AddIdentity<User, IdentityRole<int>>(options =>
@@ -53,7 +52,13 @@ builder.Services
     .AddEntityFrameworkStores<DavChatBotDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddTransient<IChatMessageService, ChatMessageService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IBotCommandService, BotCommandService>();
+builder.Services.AddTransient<IRabbitMqService, RabbitMqService>();
+
+builder.Services.AddHostedService<BotResponseBackgroundService>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

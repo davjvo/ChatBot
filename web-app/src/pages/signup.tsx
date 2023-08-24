@@ -13,8 +13,16 @@ import { UserService } from "../services/userServices";
 import { SignUpDTO } from "../DTOs/SignUpDTO";
 import helpers from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
+import CloseIcon from '@mui/icons-material/Close';
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const SignUp = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,18 +36,59 @@ export const SignUp = () => {
     signUpDto.Password = helpers.getValueOrDefault(data, 'password');
     signUpDto.PasswordConfirm = helpers.getValueOrDefault(data, 'confirmPassword');
 
-    const signUpResult = await UserService.signUp(signUpDto);
-    if (signUpResult.Success) {
-      navigate('/');
+
+    try {
+      setIsLoading(true);
+      const signUpResult = await UserService.signUp(signUpDto);
+      console.log(signUpResult);
+      if (signUpResult.success) {
+        navigate('/');
+      }
+      else {
+        setError(signUpResult.errors.join(', '));
+        setIsOpen(true);
+      }
     }
-    else {
-      console.log(signUpResult.Errors);
+    catch (exception) {
+      let message = '';
+
+      if (exception instanceof Error)
+        message = exception?.message;
+      else if (typeof exception === "string")
+        message = exception;
+
+      setError(`${message} Check that you've correctly set the constants under the utils folder.`);
+      setIsOpen(true);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
+
+  const handleToastClose = () => {
+    setIsOpen(false);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Snackbar open={isOpen} autoHideDuration={3500}
+        onClose={handleToastClose} anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'top'
+        }} action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleToastClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           marginTop: 8,
@@ -113,16 +162,26 @@ export const SignUp = () => {
                 autoComplete="new-password" />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}>
-            Sign Up
-          </Button>
+
+          {
+            !isLoading ?
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}>
+                Sign Up
+              </Button> :
+              <Grid sx={{
+                display: 'flex',
+                width: '100%'
+              }} justifyContent='center' alignItems='center'>
+                <CircularProgress />
+              </Grid>
+          }
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

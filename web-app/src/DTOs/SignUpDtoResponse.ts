@@ -1,4 +1,5 @@
 export type SignUpDtoResponse = {
-  Success: boolean;
-  Errors: string[];
+  success: boolean;
+  errors: string[];
+  userId: number;
 }

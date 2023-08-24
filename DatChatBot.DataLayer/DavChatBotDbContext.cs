@@ -10,7 +10,7 @@ namespace DatChatBot.DataLayer
 
     public class DavChatBotDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public DbSet<ChatBotMessage> ChatBotMessages { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         public DavChatBotDbContext(DbContextOptions<DavChatBotDbContext> options) : base(options)
         {
